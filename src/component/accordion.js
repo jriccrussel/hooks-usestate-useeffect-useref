@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const Accordion = () => {
+export const Accordion = ({ items }) => {
   return (
-    <div>Accordion</div>
+    <div>{items.length}</div>
   )
 }
