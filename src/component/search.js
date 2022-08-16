@@ -21,19 +21,8 @@ export const Search = () => {
     // useEffect(() => {},[])- run cya after every rerender
     // useEffect(() => {},[data])- run cya after every render if naa changes sa data
 
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            setDebouncedTerm(term)
-        }, 500)
-
-        return () => {
-            clearTimeout(timeoutId)
-        }
-    },[term])
-
     // every rerender ang component and ang term has change run ang useEffect
-    // debounce
-    useEffect(() => {
+    // useEffect(() => {
         // 3 ways sa anyc await 
 
         // async await using variable
@@ -53,29 +42,19 @@ export const Search = () => {
         //    console.log(response.data)
         // })
 
-        const search = async () => {
-            // await axios.get('https://en.wikipedia.org/w/api.php', {
-            //     params: {
-            //         action: 'query',
-            //         list: 'search',
-            //         origin: '*',
-            //         format: 'json',
-            //         srsearch: term,
-            //     },
-            // })
+        // const search = async () => {
+        //     await axios.get('https://en.wikipedia.org/w/api.php', {
+        //         params: {
+        //             action: 'query',
+        //             list: 'search',
+        //             origin: '*',
+        //             format: 'json',
+        //             srsearch: term,
+        //         },
+        //     })
 
-            const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
-                params: {
-                    action: 'query',
-                    list: 'search',
-                    origin: '*',
-                    format: 'json',
-                    srsearch: debouncedTerm,
-                },
-            })
-
-            setResults(data.query.search)
-        }
+        //     setResults(data.query.search)
+        // }
         // search()      
 
         // if term naa term g define or naay sulod ang term and then run ang search
@@ -115,10 +94,43 @@ export const Search = () => {
         //     }
         // }
 
+        // if(debouncedTerm){
+        //     search()
+        // }
+    // }, [term])    
+    
+    // error ni cya if(term && !result.length)
+    // error sa react na results.length missing dependancy
+    // issue sa error sa condition if(term && !results.length) since ang term naa sulod 'programming' call ang search() but since ang 'results' naa 10 sulod sa iyang array so ang 'results' change kai naa man cya sulod so mo rerender napud cya
+    // and ang react mag ask mag add ta ug result.legnth sa dependency array [term, results.length] then mo pop ang error
+    // to fix the error add ta debounceTerm state will keep on track ni [term, results.length]
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDebouncedTerm(term)
+        }, 500)
+
+        return () => {
+            clearTimeout(timeoutId)
+        }
+    },[term])
+
+    useEffect(() => {
+        const search = async () => {
+            const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
+                params: {
+                    action: 'query',
+                    list: 'search',
+                    origin: '*',
+                    format: 'json',
+                    srsearch: debouncedTerm,
+                },
+            })
+            setResults(data.query.search)
+        }
         if(debouncedTerm){
             search()
         }
-    }, [debouncedTerm])    
+    }, [debouncedTerm])  
 
     // clean up function    
     // sa initial render 
