@@ -8,6 +8,8 @@ export const Search = () => {
     // grab data from term(fetch from search kato async await) and pasa as an array sa results
     const [results, setResults] = useState([])
 
+    const [debouncedTerm, setDebouncedTerm] = useState(term)
+
     // console.log(results)
 
     // rerender - means ang pag changing sa state or props like pag changing, type sa input, adding, or removing sa data or prop
@@ -19,7 +21,18 @@ export const Search = () => {
     // useEffect(() => {},[])- run cya after every rerender
     // useEffect(() => {},[data])- run cya after every render if naa changes sa data
 
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDebouncedTerm(term)
+        }, 500)
+
+        return () => {
+            clearTimeout(timeoutId)
+        }
+    },[term])
+
     // every rerender ang component and ang term has change run ang useEffect
+    // debounce
     useEffect(() => {
         // 3 ways sa anyc await 
 
@@ -57,7 +70,7 @@ export const Search = () => {
                     list: 'search',
                     origin: '*',
                     format: 'json',
-                    srsearch: term,
+                    srsearch: debouncedTerm,
                 },
             })
 
@@ -85,23 +98,27 @@ export const Search = () => {
         // }
 
         // if naa sulod ang term and wla sulod ang result then run ang if statement
-        if (term && !results.length){
-            if(term){
-                search()
-            }
+        // if (term && !results.length){
+        //     if(term){
+        //         search()
+        //     }
         // if naa sulod ang term and naa sulod ang result then run ang else statement
-        } else {
-            const timeoutId = setTimeout(() => {
-                if(term){
-                    search()
-                }
-            }, 500)
+        // } else {
+        //     const timeoutId = setTimeout(() => {
+        //         if(term){
+        //             search()
+        //         }
+        //     }, 500)
     
-            return () => {
-                clearTimeout(timeoutId)
-            }
+        //     return () => {
+        //         clearTimeout(timeoutId)
+        //     }
+        // }
+
+        if(debouncedTerm){
+            search()
         }
-    }, [term])    
+    }, [debouncedTerm])    
 
     // clean up function    
     // sa initial render 
