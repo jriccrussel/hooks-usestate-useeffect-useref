@@ -43,18 +43,18 @@ export const Search = () => {
         // })
 
         // const search = async () => {
-        //     await axios.get('https://en.wikipedia.org/w/api.php', {
-        //         params: {
-        //             action: 'query',
-        //             list: 'search',
-        //             origin: '*',
-        //             format: 'json',
-        //             srsearch: term,
-        //         },
-        //     })
-
-        //     setResults(data.query.search)
-        // }
+        //     const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
+        //       params: {
+        //         action: 'query',
+        //         list: 'search',
+        //         origin: '*',
+        //         format: 'json',
+        //         srsearch: term,
+        //       },
+        //     });
+      
+        //     setResults(data.query.search);
+        //   }
         // search()      
 
         // if term naa term g define or naay sulod ang term and then run ang search
@@ -82,28 +82,25 @@ export const Search = () => {
         //         search()
         //     }
         // if naa sulod ang term and naa sulod ang result then run ang else statement
-        // } else {
-        //     const timeoutId = setTimeout(() => {
-        //         if(term){
-        //             search()
+        //     } else {
+        //         const timeoutId = setTimeout(() => {
+        //             if(term){
+        //                 search()
+        //             }
+        //         }, 500)
+        
+        //         return () => {
+        //             clearTimeout(timeoutId)
         //         }
-        //     }, 500)
-    
-        //     return () => {
-        //         clearTimeout(timeoutId)
         //     }
-        // }
-
-        // if(debouncedTerm){
-        //     search()
-        // }
-    // }, [term])    
-    
+        // }, [term])    
+        
     // error ni cya if(term && !result.length)
     // error sa react na results.length missing dependancy
     // issue sa error sa condition if(term && !results.length) since ang term naa sulod 'programming' call ang search() but since ang 'results' naa 10 sulod sa iyang array so ang 'results' change kai naa man cya sulod so mo rerender napud cya
     // and ang react mag ask mag add ta ug result.legnth sa dependency array [term, results.length] then mo pop ang error
-    // to fix the error add ta debounceTerm state will keep on track ni [term, results.length]
+    // and also inig check nato sa network tab naa 2 ka request isa para sa term - 'programming' and isa result - setResults(data.query.search)
+    // // so to fix the error add ta debounceTerm state will keep on track ni [term, results.length]
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             setDebouncedTerm(term)
