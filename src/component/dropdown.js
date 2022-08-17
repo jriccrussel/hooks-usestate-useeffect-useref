@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+
 
 export const Dropdown = ({ options, selected, onSelectedChange }) => {
     const [open, setOpen] = useState(false)
+    const ref = useRef()
 
     useEffect(() => {
         // click sa gawas select option ma automatic ma close
-        document.body.addEventListener("click", () => {
+        document.body.addEventListener("click", 
+            (e) => {
+                // sa ref inig click dili nato run ang event listner and if ma close sa gawas run dayon ang event listener
+                if(ref.current.contains(e.target)){
+                    return
+                }
                 setOpen(false)
             }, { capture: true }
         )
@@ -30,7 +37,7 @@ export const Dropdown = ({ options, selected, onSelectedChange }) => {
     })
 
     return (
-        <div className="ui form">
+        <div ref={ref} className="ui form">
             <div className="field">
                 <label className="label">Select a Color</label>
                 <div 
