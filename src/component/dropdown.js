@@ -7,15 +7,30 @@ export const Dropdown = ({ options, selected, onSelectedChange }) => {
 
     useEffect(() => {
         // click sa gawas select option ma automatic ma close
-        document.body.addEventListener("click", 
-            (e) => {
+        // document.body.addEventListener("click", 
+        //     (e) => {
                 // sa ref inig click dili nato run ang event listner and if ma close sa gawas run dayon ang event listener
-                if(ref.current.contains(e.target)){
-                    return
-                }
-                setOpen(false)
-            }, { capture: true }
-        )
+        //         if(ref.current.contains(e.target)){
+        //             return
+        //         }
+        //         setOpen(false)
+        //     }, { capture: true }
+        // )
+
+        // inig click sa toggle para e hide ang select option ang clean func will remove ang event listener we can able to click sa normaally screen with no errors 
+        
+        // and if toggle balik e show ang select option we can able to close automatically ang select option 
+        const onBodyClick = (e) => {
+            if(ref.current.contains(e.target)){
+                return
+            }
+            setOpen(false)
+        }
+        document.body.addEventListener('click', onBodyClick)
+        return () => {
+            document.body.removeEventListener('click', onBodyClick)
+        }
+
     }, [])
 
     const renderedOptions = options.map((option) => {
