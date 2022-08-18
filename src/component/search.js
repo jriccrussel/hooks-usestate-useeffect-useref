@@ -76,24 +76,24 @@ export const Search = () => {
         //     clearTimeout(timeoutId)
         // }
 
-        // if naa sulod ang term and wla sulod ang result then run ang if statement
-        // if (term && !results.length){
-        //     if(term){
-        //         search()
-        //     }
-        // if naa sulod ang term and naa sulod ang result then run ang else statement
-        //     } else {
-        //         const timeoutId = setTimeout(() => {
-        //             if(term){
-        //                 search()
-        //             }
-        //         }, 500)
-        
-        //         return () => {
-        //             clearTimeout(timeoutId)
-        //         }
-        //     }
-        // }, [term])    
+    // if naa sulod ang term and wla sulod ang result then run ang if statement
+    // if (term && !results.length){
+    //     if(term){
+    //         search()
+    //     }
+    // if naa sulod ang term and naa sulod ang result then run ang else statement
+    //     } else {
+    //         const timeoutId = setTimeout(() => {
+    //             if(term){
+    //                 search()
+    //             }
+    //         }, 500)
+    
+    //         return () => {
+    //             clearTimeout(timeoutId)
+    //         }
+    //     }
+    // }, [term])    
         
     // error ni cya if(term && !result.length)
     // error sa react na results.length missing dependancy
