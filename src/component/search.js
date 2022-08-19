@@ -95,30 +95,30 @@ export const Search = () => {
     //     }
     // }, [term])    
 
-    useEffect(() => {
-        const search = async () => {
-            const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
-                params: {
-                action: 'query',
-                list: 'search',
-                origin: '*',
-                format: 'json',
-                srsearch: term,
-                },
-            })        
-            setResults(data.query.search);
-        }
+    // useEffect(() => {
+    //     const search = async () => {
+    //         const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
+    //             params: {
+    //             action: 'query',
+    //             list: 'search',
+    //             origin: '*',
+    //             format: 'json',
+    //             srsearch: term,
+    //             },
+    //         })        
+    //         setResults(data.query.search);
+    //     }
 
-        const timeoutId = setTimeout(() => {
-            if(term){
-                search()
-            }
-        }, 500)
+    //     const timeoutId = setTimeout(() => {
+    //         if(term){
+    //             search()
+    //         }
+    //     }, 500)
 
-        return () => {
-            clearTimeout(timeoutId)
-        }
-    }, [term])
+    //     return () => {
+    //         clearTimeout(timeoutId)
+    //     }
+    // }, [term])
         
     // error ni cya if(term && !result.length)
     // error sa react na results.length missing dependancy
@@ -126,33 +126,33 @@ export const Search = () => {
     // and ang react mag ask mag add ta ug result.legnth sa dependency array [term, results.length] then mo pop ang error
     // and also inig check nato sa network tab naa 2 ka request isa para sa term - 'programming' and isa result - setResults(data.query.search)
     // // so to fix the error add ta debounceTerm state will keep on track ni [term, results.length]
-    // useEffect(() => {
-    //     const timeoutId = setTimeout(() => {
-    //         setDebouncedTerm(term)
-    //     }, 500)
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setDebouncedTerm(term)
+        }, 500)
 
-    //     return () => {
-    //         clearTimeout(timeoutId)
-    //     }
-    // },[term])
+        return () => {
+            clearTimeout(timeoutId)
+        }
+    },[term])
 
-    // useEffect(() => {
-    //     const search = async () => {
-    //         const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
-    //             params: {
-    //                 action: 'query',
-    //                 list: 'search',
-    //                 origin: '*',
-    //                 format: 'json',
-    //                 srsearch: debouncedTerm,
-    //             },
-    //         })
-    //         setResults(data.query.search)
-    //     }
-    //     if(debouncedTerm){
-    //         search()
-    //     }
-    // }, [debouncedTerm])  
+    useEffect(() => {
+        const search = async () => {
+            const { data } = await axios.get('https://en.wikipedia.org/w/api.php', {
+                params: {
+                    action: 'query',
+                    list: 'search',
+                    origin: '*',
+                    format: 'json',
+                    srsearch: debouncedTerm,
+                },
+            })
+            setResults(data.query.search)
+        }
+        if(debouncedTerm){
+            search()
+        }
+    }, [debouncedTerm])  
 
     // clean up function    
     // sa initial render 
