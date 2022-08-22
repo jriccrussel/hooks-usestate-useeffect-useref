@@ -1,8 +1,10 @@
 import React, { useState } from "react"
 import { Accordion } from "./component/accordion"
 import { Dropdown } from "./component/dropdown"
+import { Route } from "./component/route"
 import { Search } from "./component/search"
 import { Translate } from "./component/translate"
+import { Header } from './component/header'
 
 const items = [
   {
@@ -60,7 +62,7 @@ const showTranslate = () => {
 
 
 const App = () => {
-  // const [selected, setSelected] = useState(options[0])
+  const [selected, setSelected] = useState(options[0])
   // const [showDropdown, setShowDropdown] = useState(true)
 
   return (
@@ -78,10 +80,29 @@ const App = () => {
       ): null} */}
       {/* <Translate /> */}
 
-      {showAccordion()}
+      {/* show handler */}
+      {/* {showAccordion()}
       {showList()}
       {showDropdown()}
-      {showTranslate()}
+      {showTranslate()} */}
+      <Header />
+      <Route path="/">
+        <Accordion items={items} />
+      </Route>
+      <Route path="/list">
+        <Search />
+      </Route>
+      <Route path="/dropdown">
+        <Dropdown
+          label="Select a color"
+          options={options}
+          selected={selected}
+          onSelectedChange={setSelected}
+        />
+      </Route>
+      <Route path="/translate">
+        <Translate />
+      </Route>
     </div>
   )
 }
